@@ -1,5 +1,5 @@
 import './styles.css';
-import { useState } from 'react';
+import { useRef } from 'react';
 
 interface Props {
   todo: string;
@@ -8,9 +8,17 @@ interface Props {
 }
 
 const InputField = ({ todo, setTodo, handleAdd }: Props) => {
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
-    <form className='input' onSubmit={handleAdd}>
+    <form
+      className='input'
+      onSubmit={(e) => {
+        handleAdd(e);
+        inputRef.current?.blur();
+      }}
+    >
       <input
+        ref={inputRef}
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
         type='input'
