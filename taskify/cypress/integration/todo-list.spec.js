@@ -4,19 +4,13 @@ describe('Todo List', () => {
   });
 
   it('should have an empty active tasks column', () => {
-    cy.get('.todos__heading')
-      .first()
-      .should('have.text', 'Active Tasks')
-      .children()
-      .should('have.length', 0);
+    cy.get('.todos__heading').first().should('have.text', 'Active Tasks');
+    cy.get('.todos__single').should('not.exist');
   });
 
   it('should have an empty completed tasks column', () => {
-    cy.get('.todos__heading')
-      .last()
-      .should('have.text', 'Completed Tasks')
-      .children()
-      .should('have.length', 0);
+    cy.get('.todos__heading').last().should('have.text', 'Completed Tasks');
+    cy.get('.todos__single').should('not.exist');
   });
 
   it('should display a newly added active task', () => {});
