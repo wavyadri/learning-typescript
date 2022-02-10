@@ -12,8 +12,4 @@ describe('Todo List', () => {
     cy.get('.todos__heading').last().should('have.text', 'Completed Tasks');
     cy.get('.todos__single').should('not.exist');
   });
-
-  it('should display a newly added active task', () => {});
-
-  it('should display a newly completed task', () => {});
 });
