@@ -9,29 +9,27 @@ export type Question = {
   type: string;
 };
 
-// use props from Question but also add answers
-export type QuestionState = Question & { answers: string[] };
-
 export enum Difficulty {
   EASY = 'easy',
   MEDIUM = 'medium',
   HARD = 'hard',
 }
+
+export type QuestionState = Question & { answers: string[] };
+
 export const fetchQuizQuestions = async (
   amount: number,
   difficulty: Difficulty
-) => {
+): Promise<QuestionState[]> => {
   const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`;
-  const data = await fetch(endpoint);
-  const json = await data.json();
-  // OR combine 2 steps into 1
-  // const data = await (await fetch(endpoint)).json();
+  const data = await (await fetch(endpoint)).json();
 
-  return json.results.map((question: Question) => ({
-    ...question,
-    answers: shuffleArray([
-      ...question.incorrect_answers,
-      question.correct_answer,
-    ]),
-  }));
+  return data.results.map((question: Question) => {
+    let answersArray = [...question.incorrect_answers, question.correct_answer];
+
+    return {
+      ...question,
+      answers: shuffleArray(answersArray),
+    };
+  });
 };
